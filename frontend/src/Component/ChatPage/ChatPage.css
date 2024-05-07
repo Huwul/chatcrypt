@@ -1,0 +1,30 @@
+.container {
+    height: 80vh;
+    width: 85vw;
+    background: #00000076; 
+    /* backdrop-filter: blur(10px);*/
+    display: grid;
+    grid-template-columns: 25% 75%;
+    border-radius: 18px;
+    @media screen and (min-width: 720px) and (max-width: 1080px) {}
+    grid-template-columns: 35% 65%;
+}
+
+.buton {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(54, 160, 199, 0.534);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .buton:hover {
+    background-color: rgba(54, 160, 199, 0.997);
+  }
