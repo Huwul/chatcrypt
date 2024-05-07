@@ -7,8 +7,8 @@ import User from "../models/user.model.js";
 
 export const sendMessage = async (req, res) => {
     try {
-        console.log(req.body); // log the request body
-        console.log(req.file); // log the file
+        //console.log(req.body); // log the request body
+        //console.log(req.file); // log the file
         const { message } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
