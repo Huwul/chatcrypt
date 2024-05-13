@@ -77,7 +77,7 @@ export const signup = async (req, res) => {
             //console.log(token);
             //TOKEN OLUŞTURMA VE KAYDETME İŞLEMİ SONU
             //EMAİL GÖNDERME İŞLEMİ
-            const link = `http://localhost:5000/api/auth/confirm/${token.token}`;
+            const link = `https://fortichat-kej7.onrender.com${token.token}`;
             await verifmail(email, link);
             //console.log("Email verified succsessfully.");
             // RETURN EDİLECEK PAGE
@@ -227,7 +227,7 @@ export const resendEmail = async (req, res) => {
             if (decryptedEmail === email) {
                 try {
                     const userToken = await Token.findOne({ userId: user._id });
-                    const link = `http://localhost:5000/api/auth/confirm/${userToken.token}`;
+                    const link = `https://fortichat-kej7.onrender.com${userToken.token}`;
                     verifmail(email, link);
                     res.status(200).json({
                         message: "Email sent successfully",
