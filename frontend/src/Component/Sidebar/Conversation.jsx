@@ -3,7 +3,7 @@ import "./Sidebar.css";
 import useConversation from "../../zustand/useConversation";
 import { useSocketContext } from "../../context/SocketContext";
 
-const Conversation = ({ conversation, lastIdx }) => {
+const Conversation = ({ id, conversation, lastIdx }) => {
     const { selectedConversation, setSelectedConversation } = useConversation();
 
     const isSelected = selectedConversation?._id === conversation._id;
@@ -13,6 +13,7 @@ const Conversation = ({ conversation, lastIdx }) => {
     return (
         <>
             <div
+                id={id}
                 className={`other ${isSelected ? "sidebarclick" : ""}`}
                 onClick={() => setSelectedConversation(conversation)}
             >

@@ -4,11 +4,13 @@ import { encrypt, decrypt } from "../utils/cryptoUtils.js";
 import { getReceiverSocketId } from "../socket/socket.js";
 import { io } from "../socket/socket.js";
 import User from "../models/user.model.js";
+import Notification from "../models/notification.model.js";
 
 export const sendMessage = async (req, res) => {
     try {
         //console.log(req.body); // log the request body
         //console.log(req.file); // log the file
+
         const { message } = req.body;
         const { id: receiverId } = req.params;
         const senderId = req.user._id;
@@ -43,13 +45,7 @@ export const sendMessage = async (req, res) => {
             receiverId,
             receiverName: receiverUser.fullName,
             message: encryptedMessage,
-            filePath:
-                file != null &&
-                (file.mimetype.startsWith("audio/") ||
-                    file.mimetype.startsWith("video/") ||
-                    file.mimetype.startsWith("image/"))
-                    ? file.path
-                    : null,
+            filePath: file != null ? encrypt(file.path) : null,
         });
 
         if (newMessage) {
@@ -58,15 +54,36 @@ export const sendMessage = async (req, res) => {
 
         await Promise.all([conversation.save(), newMessage.save()]);
 
+        // Create a new notification for the receiver
+        const newNotification = new Notification({
+            userId: receiverId, // The ID of the user who will receive the notification
+            messageId: newMessage._id, // The ID of the new message
+            senderId: senderId, // The ID of the user who sent the message
+            message: encrypt(
+                `New message from ${decrypt(senderUser.fullName)}`
+            ), // The content of the message
+        });
+        await newNotification.save();
+
+        const receiverSocketId = getReceiverSocketId(receiverId);
+
+        if (receiverSocketId) {
+            // Convert the Mongoose document to a plain JavaScript object before emitting it
+            const notificationToSend = {
+                ...newNotification.toObject(),
+                message: decrypt(newNotification.message),
+            };
+            io.to(receiverSocketId).emit("newNotification", notificationToSend);
+        }
+
         const decryptedMessage = {
             ...newMessage._doc,
             senderName: decrypt(newMessage.senderName),
             receiverName: decrypt(newMessage.receiverName),
             message: decrypt(newMessage.message),
-            filePath: newMessage.filePath,
+            filePath: decrypt(newMessage.filePath),
         };
 
-        const receiverSocketId = getReceiverSocketId(receiverId);
         if (receiverSocketId) {
             io.to(receiverSocketId).emit("newMessage", decryptedMessage);
         }
@@ -92,12 +109,18 @@ export const getMessages = async (req, res) => {
         if (!conversation) return res.status(200).json([]);
 
         const messages = conversation.messages.map((message) => {
-            return {
-                ...message._doc,
-                senderName: decrypt(message.senderName),
-                receiverName: decrypt(message.receiverName),
-                message: decrypt(message.message),
-            };
+            try {
+                return {
+                    ...message._doc,
+                    senderName: decrypt(message.senderName),
+                    receiverName: decrypt(message.receiverName),
+                    message: decrypt(message.message),
+                    filePath: decrypt(message.filePath),
+                };
+            } catch (error) {
+                console.log("Error decrypting message:", message);
+                throw error;
+            }
         });
 
         res.status(200).json(messages);

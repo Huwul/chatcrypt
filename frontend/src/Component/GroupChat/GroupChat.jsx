@@ -38,17 +38,22 @@ const GroupChat = () => {
     const options = useMemo(
         () =>
             Array.isArray(conversations?.users)
-                ? conversations.users.map((user) => ({
-                      value: user._id,
-                      label: user.fullName,
-                  }))
+                ? conversations.users
+                      .sort((a, b) => a.fullName.localeCompare(b.fullName)) // Sort users in alphabetical order
+                      .map((user) => ({
+                          value: user._id,
+                          label: user.fullName,
+                      }))
                 : [],
         [conversations]
     );
 
     return (
         <>
-            <form onSubmit={handleCreateGroupChat}>
+            <form
+                onSubmit={handleCreateGroupChat}
+                style={{ maxWidth: "300px" }}
+            >
                 <div className="bordertest">
                     <label className="bold">Group Name:</label>
                     <input

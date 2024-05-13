@@ -50,11 +50,22 @@
   .buton2:hover {
     background-color: rgba(54, 160, 199, 0.997);
   }
-  
+/*   
+  .profile-border {
+    border-left: 2px solid gray;
+    min-width: 250px;
+    max-width: 250px;
+  } */
+
   .profile-border {
   border-left: 2px solid gray;
   min-width: 250px;
   max-width: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  overflow:scroll;
+  overflow-x: hidden;
 }
 
 .groupprof1 {
@@ -64,7 +75,7 @@
 }
 
 .groupprof2 {
-  text-align: left;
+  text-align: center;
   padding-left: 10px;
   padding-top: 10px;
 }
@@ -79,7 +90,7 @@
     bottom: 11px;
     left: 100px;
     padding: 10px 20px;
-    margin-top: 7px;
+    /* margin-top: 7px; */
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -90,13 +101,14 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin: 10px 0;
 }
 
 .remove-button {
     bottom: 11px;
     left: 100px;
     padding: 10px 20px;
-    margin-top: 7px;
+    /* margin-top: 7px; */
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -108,5 +120,8 @@
     cursor: pointer;
     transition: background-color 0.3s;
     justify-content: center;
+    margin: 10px 0;
 }
+
+
 

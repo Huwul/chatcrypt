@@ -23,9 +23,9 @@ const useListenMessages = () => {
                 // Check if the sender is not the current user
                 const sound = new Audio(notificationSound);
                 sound.play();
-                toast(`New message from ${decryptedMessage.senderName}`, {
+                /* toast(`New message from ${decryptedMessage.senderName}`, {
                     duration: 7000,
-                });
+                }); */
             }
         });
 

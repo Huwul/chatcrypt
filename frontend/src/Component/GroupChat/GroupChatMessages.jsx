@@ -29,7 +29,7 @@ const GroupChatMessages = ({ groupId, userId }) => {
                 body: formData, // Send the FormData object
             });
             const data = await response.json();
-            console.log(data);
+            //console.log(data);
             setMessage("");
             setFile(null); // Reset the file state
         } catch (error) {

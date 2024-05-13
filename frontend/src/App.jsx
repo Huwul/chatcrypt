@@ -9,6 +9,7 @@ import MailVerificationPage from "./Component/MailVerificationPage/MailVerificat
 // import ForgotPage from "./Component/ForgotPage/ForgotPage";
 import { Toaster } from "react-hot-toast";
 import { useAuthContext } from "./context/AuthContext";
+import VerifiedPage from "./Component/VerifiedPage/VerifiedPage";
 
 function App() {
     const { authUser } = useAuthContext();
@@ -85,6 +86,11 @@ function App() {
                     path="/changepassword"
                     element={ <ForgotPage /> }
                 /> */}
+
+                <Route
+                    path="/verified"
+                    element={ <VerifiedPage /> }
+                /> 
             </Routes>
             <Toaster />
         </div>

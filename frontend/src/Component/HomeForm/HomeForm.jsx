@@ -15,8 +15,8 @@ const HomeForm = () => {
 
     return (
         <div>
-            <h1 className="ws">HELLO {profileData.fullName || ""}! WELCOME TO</h1>
-             <img src="Chatcrypt-yatay.png" alt="No Data" width="650" height="650"></img>
+            <h1 className="ws">HELLO {profileData.fullName || ""}! WELCOME TO </h1>
+             <img src="Fortı-removebg-preview.png" alt="No Data" width="300" height="300"></img>
              <p className="ws"> This app was designed as a graduation project by 
                     2023-2024 academic year spring semester graduates Halil Yüksel,
                     Buse Alasköz, Ege Barlas and Ahmet Fatih Saruhan.</p>

@@ -53,10 +53,6 @@ const GroupChatInfo = ({ conversation }) => {
     };
 
     const allUsers = useMemo(() => {
-        //console.log("Recalculating allUsers...");
-        //console.log("conversations.users:", conversations?.users);
-        //console.log("groupInfo.usersInfo:", groupInfo?.usersInfo);
-
         if (Array.isArray(conversations?.users) && groupInfo?.usersInfo) {
             const groupUsersWithCorrectId = groupInfo.usersInfo.map((user) => ({
                 ...user,
@@ -70,7 +66,9 @@ const GroupChatInfo = ({ conversation }) => {
                 label: user.fullName,
             }));
 
-            //console.log("New allUsers:", users);
+            // Sort users by label (full name)
+            users.sort((a, b) => a.label.localeCompare(b.label));
+
             return users;
         } else {
             return [];
@@ -126,7 +124,7 @@ const GroupChatInfo = ({ conversation }) => {
             <div className="groupprof2">
                 Group Admin: {groupInfo?.adminInfo.name}
             </div>
-            <br />
+
             <div>
                 Members:{" "}
                 {groupInfo?.usersInfo.map((user) => user.name).join(", ")}
@@ -134,7 +132,7 @@ const GroupChatInfo = ({ conversation }) => {
             {!isAdmin && (
                 <button
                     className="remove-button"
-                    style={{ marginTop: "220px" }}
+                    //style={{ marginTop: "220px" }}
                     onClick={handleLeaveGroup}
                 >
                     Leave Group
@@ -144,10 +142,12 @@ const GroupChatInfo = ({ conversation }) => {
                 <>
                     <Select
                         className="groupprof3"
-                        options={groupInfo?.usersInfo.map((user) => ({
-                            value: user.id,
-                            label: user.name,
-                        }))}
+                        options={groupInfo?.usersInfo
+                            .sort((a, b) => a.name.localeCompare(b.name))
+                            .map((user) => ({
+                                value: user.id,
+                                label: user.name,
+                            }))}
                         isMulti
                         onChange={setSelectedUsersToRemove}
                     />
@@ -168,7 +168,7 @@ const GroupChatInfo = ({ conversation }) => {
                     </button>
                     <button
                         className="remove-button"
-                        style={{ marginTop: "220px" }}
+                        //style={{ marginTop: "220px" }}
                         onClick={handleDeleteGroup}
                     >
                         Delete Group

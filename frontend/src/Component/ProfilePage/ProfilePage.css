@@ -57,7 +57,8 @@
 
 
 .labels:hover {
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);   
+    /* background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); */
+    background-image: linear-gradient(to left, violet,  red);
     background-clip: text;
     color: transparent; 
 }
