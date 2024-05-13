@@ -11,7 +11,7 @@ const Message = ({ message }) => {
     const fromMe =
         (message.senderId || message.sender || message.userId) === authUser._id;
     const chatClassName = fromMe ? "messagesend1" : "receivedmessage1";
-    const fileUrl = `https://fortichat-kej7.onrender.com${message.filePath}`;
+    const fileUrl = `https://fortichat-kej7.onrender.com/${message.filePath}`;
 
     const senderName = fromMe
         ? "You"
