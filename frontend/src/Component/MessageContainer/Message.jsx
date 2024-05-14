@@ -39,7 +39,7 @@ const Message = ({ message }) => {
                 </video>
             );
         } else {
-            const fileName = message.filePath.split("\\").pop();
+            const fileName = message.filePath.split(/(\\|\/)/).pop();
             fileComponent = (
                 <a
                     href={fileUrl}
