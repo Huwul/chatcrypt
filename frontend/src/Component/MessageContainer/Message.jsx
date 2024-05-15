@@ -57,7 +57,7 @@ const Message = ({ message }) => {
         <div className="">
             <div className={` ${chatClassName} `}>
                 <div className="receivedmessagetime">{senderName}</div>
-                {message.message || message.content}
+                {!message.filePath && (message.message || message.content)}
                 {fileComponent}
                 <div className="receivedmessagetime">{formattedTime}</div>
             </div>
