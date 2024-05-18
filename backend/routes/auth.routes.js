@@ -29,7 +29,7 @@ router.get("/confirm/:token", async (req, res) => {
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         await Token.findByIdAndDelete(token._id);
         res.send("Email is verified");
-        // YÖNLENDİRME BURADAN GERÇEKLEŞECEK. res.redirect("/")
+        res.redirect("/verified");
     } catch (error) {
         res.status(400).send("Invalid token");
     }

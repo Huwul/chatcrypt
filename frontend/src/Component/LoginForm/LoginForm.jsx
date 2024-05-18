@@ -47,9 +47,6 @@ function LoginForm() {
                     />
                 </div>
                 {error && <div className="error">{error}</div>}
-                <div className="remember-forgot">
-                    <a href="changepassword">Forgot Password?</a>
-                </div>
                 <button>Login</button>
                 <div className="register-link"></div>
                 <p>
