@@ -26,12 +26,15 @@ router.get("/confirm/:token", async (req, res) => {
     try {
         const token = await Token.findOne({ token: req.params.token });
         if (!token) {
+            console.log(`Token not found: ${req.params.token}`);
             return res.status(400).send("Invalid token");
         }
+        console.log(`Token found: ${token}`);
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         await Token.findByIdAndDelete(token._id);
         res.redirect("/verified");
     } catch (error) {
+        console.log(`Error in /confirm/:token: ${error.message}`);
         res.status(500).send("Server error");
     }
 });
