@@ -23,25 +23,19 @@ router.get("/profile/:username", getProfile);
 router.post("/resendemail", resendEmail);
 
 router.get("/confirm/:token", async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
     try {
         const token = await Token.findOne({ token: req.params.token });
         if (!token) {
             console.log(`Token not found: ${req.params.token}`);
-            throw new Error("Invalid token");
+            return res.status(400).send("Invalid token");
         }
         console.log(`Token found: ${token}`);
         await User.updateOne({ _id: token.userId }, { isVerified: true });
-        await Token.findByIdAndDelete(token._id);
-        await session.commitTransaction();
         res.redirect("/verified");
+        await Token.findByIdAndDelete(token._id);
     } catch (error) {
-        await session.abortTransaction();
         console.log(`Error in /confirm/:token: ${error.message}`);
         res.status(500).send("Server error");
-    } finally {
-        session.endSession();
     }
 });
 
