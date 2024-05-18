@@ -25,13 +25,14 @@ router.post("/resendemail", resendEmail);
 router.get("/confirm/:token", async (req, res) => {
     try {
         const token = await Token.findOne({ token: req.params.token });
-        //console.log(token);
+        if (!token) {
+            return res.status(400).send("Invalid token");
+        }
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         await Token.findByIdAndDelete(token._id);
-        //res.send("Email is verified");
         res.redirect("/verified");
     } catch (error) {
-        res.status(400).send("Invalid token");
+        res.status(500).send("Server error");
     }
 });
 
