@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import {
     signup,
     login,
@@ -9,7 +10,6 @@ import {
 } from "../controllers/auth.controller.js";
 import Token from "../models/token.js";
 import User from "../models/user.model.js";
-import mongoose from "mongoose";
 
 const router = express.Router();
 
@@ -34,9 +34,9 @@ router.get("/confirm/:token", async (req, res) => {
         }
         console.log(`Token found: ${token}`);
         await User.updateOne({ _id: token.userId }, { isVerified: true });
-        await Token.findByIdAndDelete(token._id);
-        await session.commitTransaction();
+        Token.findByIdAndDelete(token._id);
         res.redirect("/verified");
+        await session.commitTransaction();
     } catch (error) {
         await session.abortTransaction();
         console.log(`Error in /confirm/:token: ${error.message}`);
