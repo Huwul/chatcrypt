@@ -34,9 +34,13 @@ router.get("/confirm/:token", async (req, res) => {
         }
         console.log(`Token found: ${token}`);
         await User.updateOne({ _id: token.userId }, { isVerified: true });
-        Token.findByIdAndDelete(token._id);
         res.redirect("/verified");
-        await session.commitTransaction();
+        Token.findByIdAndDelete(token._id).then(() => {
+            session.commitTransaction();
+        }).catch((error) => {
+            console.log(`Error in /confirm/:token: ${error.message}`);
+            session.abortTransaction();
+        });
     } catch (error) {
         await session.abortTransaction();
         console.log(`Error in /confirm/:token: ${error.message}`);
