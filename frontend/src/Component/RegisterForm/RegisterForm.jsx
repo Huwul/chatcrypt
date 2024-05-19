@@ -17,6 +17,8 @@ function RegisterForm() {
         gender: "",
     });
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const navigate = useNavigate();
 
     const { loading, register } = useRegister();
@@ -27,10 +29,12 @@ function RegisterForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true);
         const registrationIsSuccessful = await register(inputs);
         if (registrationIsSuccessful) {
             navigate("/verification");
         }
+        setIsSubmitting(false);
     };
 
     return (
@@ -139,7 +143,7 @@ function RegisterForm() {
                 <br />
                 <br />
 
-                <button type="submit">Register</button>
+                <button type="submit" disabled={isSubmitting}>Register</button>
                 <div className="login-link"></div>
                 <p>
                     Already have an account? <a href="login">Login</a>
