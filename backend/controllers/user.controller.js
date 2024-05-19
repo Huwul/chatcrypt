@@ -1,7 +1,6 @@
 import User from "../models/user.model.js";
 import GroupChat from "../models/groupChat.model.js";
-import bcrypt from "bcryptjs";
-import { hashUsername, decrypt } from "../utils/cryptoUtils.js";
+import { decrypt } from "../utils/cryptoUtils.js";
 
 export const getUsersForSidebar = async (req, res) => {
     try {
