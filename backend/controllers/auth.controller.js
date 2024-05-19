@@ -79,8 +79,16 @@ export const signup = async (req, res) => {
             //EMAİL GÖNDERME İŞLEMİ
             const link = `https://fortichat-kej7.onrender.com/api/auth/confirm/${token.token}`;
             await verifmail(email, link);
-            //console.log("Email verified succsessfully.");
-            // RETURN EDİLECEK PAGE
+            setTimeout(async () => {
+                const user = await User.findById(newUser._id);
+                if (user && !user.isVerified) {
+                    await User.findByIdAndDelete(newUser._id);
+                    await Token.deleteMany({ userId: newUser._id });
+                    console.log(
+                        `User with ID ${newUser._id} deleted due to unverified status`
+                    );
+                }
+            }, 30000);
         } else {
             res.status(400).json({ error: "Invalid user data" });
         }
@@ -203,16 +211,6 @@ export const resendEmail = async (req, res) => {
                     const userToken = await Token.findOne({ userId: user._id });
                     const link = `https://fortichat-kej7.onrender.com/api/auth/confirm/${userToken.token}`;
                     verifmail(email, link);
-                    setTimeout(async () => {
-                        const user = await User.findById(newUser._id);
-                        if (user && !user.isVerified) {
-                            await User.findByIdAndDelete(newUser._id);
-                            await Token.deleteMany({ userId: newUser._id });
-                            console.log(
-                                `User with ID ${newUser._id} deleted due to unverified status`
-                            );
-                        }
-                    }, 30000);
                     res.status(200).json({
                         message: "Email sent successfully",
                     });
