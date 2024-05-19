@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateTokenAndSetCookie from "../utils/generateToken.js";
-import { decrypt, encrypt, hashUsername } from "../utils/cryptoUtils.js";
+import { decrypt, encrypt } from "../utils/cryptoUtils.js";
 import Token from "../models/token.js";
 import crypto from "crypto";
 import verifmail from "../utils/verificationmail.js";
