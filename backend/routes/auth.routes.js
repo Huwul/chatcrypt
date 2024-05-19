@@ -21,7 +21,7 @@ router.get("/profile/:username", getProfile);
 
 router.post("/resendemail", resendEmail);
 
-router.get("/confirm/:token", async (req, res) => {
+router.post("/confirm/:token", async (req, res) => {
     try {
         const token = await Token.findOne({ token: req.params.token });
         if (!token) {
