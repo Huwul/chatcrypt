@@ -21,20 +21,19 @@ router.get("/profile/:username", getProfile);
 
 router.post("/resendemail", resendEmail);
 
-router.post("/confirm/:token", async (req, res) => {
+router.get("/confirm/:token", async (req, res) => {
     try {
+      try {
         const token = await Token.findOne({ token: req.params.token });
-        if (!token) {
-            /* res.redirect("/verified");
-            return; */
-            return res.status(400).send("Invalid token");
-        }
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         res.redirect("/verified");
         await Token.findByIdAndDelete(token._id);
+      } catch (error) {
+        return res.status(400).send("Invalid token");
+      }
     } catch (error) {
-        res.status(500).send("Server error");
+      return res.status(500).send("Internal Server Error");
     }
-});
+  });
 
 export default router;
