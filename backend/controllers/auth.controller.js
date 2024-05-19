@@ -88,7 +88,7 @@ export const signup = async (req, res) => {
                         `User with ID ${newUser._id} deleted due to unverified status`
                     );
                 }
-            }, 30000);
+            }, 43200000);
         } else {
             res.status(400).json({ error: "Invalid user data" });
         }
