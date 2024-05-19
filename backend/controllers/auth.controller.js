@@ -79,16 +79,6 @@ export const signup = async (req, res) => {
             //EMAİL GÖNDERME İŞLEMİ
             const link = `https://fortichat-kej7.onrender.com/api/auth/confirm/${token.token}`;
             await verifmail(email, link);
-            setTimeout(async () => {
-                const user = await User.findById(newUser._id);
-                if (user && !user.isVerified) {
-                    await User.findByIdAndDelete(newUser._id);
-                    await Token.deleteMany({ userId: newUser._id });
-                    console.log(
-                        `User with ID ${newUser._id} deleted due to unverified status`
-                    );
-                }
-            }, 30000);
             //console.log("Email verified succsessfully.");
             // RETURN EDİLECEK PAGE
         } else {
