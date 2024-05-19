@@ -9,6 +9,7 @@ import {
 } from "../controllers/auth.controller.js";
 import Token from "../models/token.js";
 import User from "../models/user.model.js";
+import { setImmediate } from "timers";
 
 const router = express.Router();
 
@@ -30,8 +31,10 @@ router.get("/confirm/:token", async (req, res) => {
         }
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         res.redirect("/verified");
-        Token.findByIdAndDelete(token._id).catch((error) => {
-            console.error(`Error deleting token: ${error}`);
+        setImmediate(() => {
+            Token.findByIdAndDelete(token._id).catch((error) => {
+                console.error(`Error deleting token: ${error}`);
+            });
         });
     } catch (error) {
         res.status(500).send("Server error");
