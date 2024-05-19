@@ -1,11 +1,5 @@
 import crypto from "crypto";
 
-export function hashUsername(username) {
-    const hash = crypto.createHash("sha256");
-    hash.update(username);
-    return hash.digest("hex");
-}
-
 export const secretKey =
     process.env.SECRET_KEY ||
     "8c4638fe6e576629090b17c5092ea4bdff2ab931f3f0a646eb6fab388ef05b198c4638fe6e576629090b17c5092ea4bd";

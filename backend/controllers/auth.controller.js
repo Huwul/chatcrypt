@@ -173,32 +173,6 @@ export const getProfile = async (req, res) => {
     });
 };
 
-//POSTMANDE TEST YAPARKEN HIZLICA KULLANICIYI SİLMEK İÇİN
-export const deleteUser = async (req, res) => {
-    try {
-        const { userName } = req.body;
-        const users = await User.find();
-        let user;
-        for (const finduser of users) {
-            if (decrypt(finduser.userName) === userName) {
-                user = finduser;
-            }
-        }
-
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
-        }
-
-        await User.findByIdAndDelete(user._id);
-        await Token.deleteMany({ userId: user._id });
-
-        res.status(200).json({ message: "User deleted successfully" });
-    } catch (error) {
-        console.log("Error in delete user controller", error.message);
-        res.status(500).json({ error: error.message });
-    }
-};
-
 export const findUserMail = async (req, res) => {
     try {
         const { userName } = req.body;

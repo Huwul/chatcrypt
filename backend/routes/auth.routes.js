@@ -3,7 +3,6 @@ import {
     signup,
     login,
     logout,
-    deleteUser,
     getProfile,
     resendEmail,
 } from "../controllers/auth.controller.js";
@@ -37,7 +36,5 @@ router.get("/confirm/:token", async (req, res) => {
         res.status(500).send("Server error");
     }
 });
-
-router.post("/delete", deleteUser);
 
 export default router;
