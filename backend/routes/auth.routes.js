@@ -30,7 +30,9 @@ router.get("/confirm/:token", async (req, res) => {
         }
         await User.updateOne({ _id: token.userId }, { isVerified: true });
         res.redirect("/verified");
-        await Token.findByIdAndDelete(token._id);
+        Token.findByIdAndDelete(token._id).catch((error) => {
+            console.error(`Error deleting token: ${error}`);
+        });
     } catch (error) {
         res.status(500).send("Server error");
     }
