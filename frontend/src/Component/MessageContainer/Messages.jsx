@@ -36,7 +36,7 @@ const Messages = ({ groupId }) => {
             <div className="notif">
                 <CiLock />
                 Messages are end to end encrypted. No one outside of this chat
-                can read them, not even Chatcrypt.
+                can read them, not even FortiChat.
             </div>
             <br></br>
             {messages &&
