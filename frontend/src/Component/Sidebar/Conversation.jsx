@@ -21,13 +21,13 @@ const Conversation = ({ id, conversation, lastIdx }) => {
                     <div className="">
                         <img
                             src={conversation.profilePic}
-                            alt="no photo"
+                            alt="No Profile Pic"
                             onError={(e) => {
                                 e.target.onerror = null;
                                 e.target.src =
                                     "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
                             }}
-                        ></img>
+                        />
                     </div>
                 </div>
 
